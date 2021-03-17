@@ -43,7 +43,7 @@ const enum TargetType {
   INVALID = 0,
   // 常规的
   COMMON = 1,
-  // 收集者
+  // 集合类的
   COLLECTION = 2
 }
 
@@ -58,7 +58,7 @@ function targetTypeMap(rawType: string) {
     case 'Set':
     case 'WeakMap':
     case 'WeakSet':
-      // 收集者
+      // 集合类的
       return TargetType.COLLECTION
     default:
       // 无效
@@ -200,7 +200,7 @@ function createReactiveObject(
   isReadonly: boolean,
   // 基础handler
   baseHandlers: ProxyHandler<any>,
-  // 收集者handler
+  // 集合类的handler
   collectionHandlers: ProxyHandler<any>
 ) {
   // 如果不是对象
@@ -223,7 +223,7 @@ function createReactiveObject(
     return target
   }
   // target already has corresponding Proxy
-  // 根据是否只读，来获取响应的响应式对象收集者（声明在当前文件36行，添加在当前文件249行）
+  // 根据是否只读，来获取响应的响应式对象集合（声明在当前文件36行，添加在当前文件249行）
   const proxyMap = isReadonly ? readonlyMap : reactiveMap
   // 判断是否存在代理对象
   const existingProxy = proxyMap.get(target)
@@ -241,10 +241,10 @@ function createReactiveObject(
   // 创建代理
   const proxy = new Proxy(
     target,
-    // 判断是否是收集者类型，如果是则使用`collectionHandlers`，如果不是，使用默认的`baseHandlers`
+    // 判断是否是集合类的类型，如果是则使用`collectionHandlers`，如果不是，使用默认的`baseHandlers`
     targetType === TargetType.COLLECTION ? collectionHandlers : baseHandlers
   )
-  // 在对应的响应式对象收集者中添加代理过的对象，用以下次使用直接调用，不需要再次代理
+  // 在对应的响应式对象集合中添加代理过的对象，用以下次使用直接调用，不需要再次代理
   // （声明在当前文件36行，再次使用在当前文件229行）
   proxyMap.set(target, proxy)
   // 返回代理过的对象

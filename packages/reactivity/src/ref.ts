@@ -74,7 +74,7 @@ class RefImpl<T> {
 
   // 读取值的时候
   get value() {
-    // 添加追踪
+    // 添加get的依赖手机
     track(toRaw(this), TrackOpTypes.GET, 'value')
     // 返回当前值
     return this._value
