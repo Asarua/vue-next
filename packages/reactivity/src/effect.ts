@@ -11,19 +11,11 @@ type KeyToDepMap = Map<any, Dep>
   响应式依赖收集者的数据结构
   new WeakMap([
     [
-      target, // 每一个被监听的数据
+      target, // 每一个被监听的对象
       new Map([ // 依赖收集
         [
-          'set', // 监听的事件
+          'xxx', 每个被观察的属性
           Set // 要触发的列表
-        ],
-        [
-          'add',
-          Set
-        ],
-        [
-          'delete',
-          Set
         ]
       ])
     ]
@@ -205,7 +197,7 @@ export function resetTracking() {
  * @returns
  */
 export function track(target: object, type: TrackOpTypes, key: unknown) {
-  // 如果是不需要添加收集依赖或者当前没有响应式的副作用函数，不进行依赖收集
+  // 如果是不需要添加收集依赖或者当前没有响应式的副作用函数，直接返回
   if (!shouldTrack || activeEffect === undefined) {
     return
   }

@@ -27,6 +27,7 @@ export interface WritableComputedOptions<T> {
 // 计算属性实体类
 class ComputedRefImpl<T> {
   private _value!: T
+  // 用来标识是否需要重新计算值，默认需要重新计算
   private _dirty = true
 
   public readonly effect: ReactiveEffect<T>
@@ -43,6 +44,7 @@ class ComputedRefImpl<T> {
     this.effect = effect(getter, {
       lazy: true,
       scheduler: () => {
+        // 如果是依赖于缓存的值
         if (!this._dirty) {
           this._dirty = true
           trigger(toRaw(this), TriggerOpTypes.SET, 'value')
@@ -54,11 +56,10 @@ class ComputedRefImpl<T> {
   }
 
   get value() {
-    // 如果是脏检查
+    // 如果需要重新计算值
     if (this._dirty) {
-      // 直接取到获取值
+      // 再次进行计算
       this._value = this.effect()
-      // 将脏检查属性设置为false
       this._dirty = false
     }
     // 添加依赖追踪
