@@ -4,3 +4,18 @@
 
 - 我尽量弄全面点，有啥遗漏希望大佬们看到后指出
 - 建议在vscode中查看此项目，并下载`Better Comments`插件，因为我在比较重要的地方添加了高亮注释，使用vscode和这个插件可以更清楚的看到
+- 当前进度
+
+- [x] reactivity
+- [ ] compiler-core
+- [ ] compiler-dom
+- [ ] compiler-sfc
+- [ ] compiler-ssr
+- [ ] runtime-core
+- [ ] runtime-dom
+- [ ] runtime-test
+- [ ] server-renderer
+- [ ] shared
+- [ ] size-check
+- [ ] template-explorer
+- [ ] vue
