@@ -77,7 +77,7 @@ function getTargetType(value: Target) {
 }
 
 // only unwrap nested ref
-// 未包裹的嵌套ref对象
+// 不进行嵌套包裹的Ref
 type UnwrapNestedRefs<T> = T extends Ref ? T : UnwrapRef<T>
 
 /**

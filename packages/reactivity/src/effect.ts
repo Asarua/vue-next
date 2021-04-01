@@ -15,7 +15,7 @@ type KeyToDepMap = Map<any, Dep>
       new Map([ // 依赖收集
         [
           'xxx', 每个被观察的属性
-          Set // 要触发的列表
+          new Set() // 要触发的列表
         ]
       ])
     ]
@@ -23,7 +23,7 @@ type KeyToDepMap = Map<any, Dep>
 */
 const targetMap = new WeakMap<any, KeyToDepMap>()
 
-// 响应式的副作用
+// 响应对象的依赖函数
 export interface ReactiveEffect<T = any> {
   (): T
   _isEffect: true
@@ -91,12 +91,17 @@ export function effect<T = any>(
   return effect
 }
 
+// 停止响应的方法
 export function stop(effect: ReactiveEffect) {
+  // 如果已经是可响应的
   if (effect.active) {
+    // 清除与依赖之间的关系
     cleanup(effect)
+    // 如果有存在传入的自定义onStop事件，那么触发
     if (effect.options.onStop) {
       effect.options.onStop()
     }
+    // 将函数用来标识是否是响应依赖的active设置为false
     effect.active = false
   }
 }
@@ -109,7 +114,7 @@ function createReactiveEffect<T = any>(
   fn: () => T,
   options: ReactiveEffectOptions
 ): ReactiveEffect<T> {
-  // 创建包裹函数（注意，是一个函数体，并不执行，所以可以先不考虑里面的方法）
+  // 创建包裹函数
   const effect = function reactiveEffect(): unknown {
     // 如果不是激活状态（发生在触发stop方法之后）
     if (!effect.active) {
@@ -159,14 +164,15 @@ function createReactiveEffect<T = any>(
 
 // 清除响应
 function cleanup(effect: ReactiveEffect) {
-  // 获取传入的响应式函数中的依赖列表
+  // 获取传入的响应式函数中的依赖列表，如果deps存在，那么它应该是个Array<Set<ReactiveEffect>>类型
   const { deps } = effect
   // 如果存在
   if (deps.length) {
     for (let i = 0; i < deps.length; i++) {
-      // 清除
+      // 清除 Set().delete
       deps[i].delete(effect)
     }
+    // 清空deps
     deps.length = 0
   }
 }
