@@ -56,17 +56,24 @@ export function stringifyStyle(styles: NormalizedStyle | undefined): string {
   return ret
 }
 
+// 拼接class属性
 export function normalizeClass(value: unknown): string {
   let res = ''
+  // 如果是字符串
   if (isString(value)) {
     res = value
+    // 如果是数组形式
   } else if (isArray(value)) {
     for (let i = 0; i < value.length; i++) {
+      // 递归获取每一项的值
       const normalized = normalizeClass(value[i])
+      // 如果存在
       if (normalized) {
+        // 进行拼接
         res += normalized + ' '
       }
     }
+    // 如果是对象形式
   } else if (isObject(value)) {
     for (const name in value) {
       if (value[name]) {

@@ -125,6 +125,7 @@ export function advancePositionWithMutation(
   return pos
 }
 
+// 断言，如果是false的条件，那么throw一个Error
 export function assert(condition: boolean, msg?: string) {
   /* istanbul ignore if */
   if (!condition) {

@@ -15,7 +15,7 @@
 - [ ] runtime-dom
 - [ ] runtime-test
 - [ ] server-renderer
-- [ ] shared
+- [ ] shared （进行中）
 - [ ] size-check
 - [ ] template-explorer
 - [ ] vue
