@@ -11,12 +11,14 @@ import { makeMap } from './makeMap'
  * - novalidate -> noValidate
  * - readonly -> readOnly
  */
+// 特殊布尔属性值
 const specialBooleanAttrs = `itemscope,allowfullscreen,formnovalidate,ismap,nomodule,novalidate,readonly`
 export const isSpecialBooleanAttr = /*#__PURE__*/ makeMap(specialBooleanAttrs)
 
 /**
  * The full list is needed during SSR to produce the correct initial markup.
  */
+// 是否布尔属性
 export const isBooleanAttr = /*#__PURE__*/ makeMap(
   specialBooleanAttrs +
     `,async,autofocus,autoplay,controls,default,defer,disabled,hidden,` +
@@ -24,7 +26,9 @@ export const isBooleanAttr = /*#__PURE__*/ makeMap(
     `checked,muted,multiple,selected`
 )
 
+// 不安全的属性字符
 const unsafeAttrCharRE = /[>/="'\u0009\u000a\u000c\u0020]/
+// 属性校验缓存
 const attrValidationCache: Record<string, boolean> = {}
 
 export function isSSRSafeAttrName(name: string): boolean {
@@ -38,6 +42,7 @@ export function isSSRSafeAttrName(name: string): boolean {
   return (attrValidationCache[name] = !isUnsafe)
 }
 
+// props转化属性的字典
 export const propsToAttrMap: Record<string, string | undefined> = {
   acceptCharset: 'accept-charset',
   className: 'class',
@@ -47,6 +52,8 @@ export const propsToAttrMap: Record<string, string | undefined> = {
 
 /**
  * CSS properties that accept plain numbers
+ *
+ * 可以只拥有数字的css属性
  */
 export const isNoUnitNumericStyleProp = /*#__PURE__*/ makeMap(
   `animation-iteration-count,border-image-outset,border-image-slice,` +
@@ -65,6 +72,8 @@ export const isNoUnitNumericStyleProp = /*#__PURE__*/ makeMap(
  * so that we don't stringify bindings that cannot be set from HTML.
  * Don't also forget to allow `data-*` and `aria-*`!
  * Generated from https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes
+ *
+ * 是否是已知属性
  */
 export const isKnownAttr = /*#__PURE__*/ makeMap(
   `accept,accept-charset,accesskey,action,align,allow,alt,async,` +

@@ -1,3 +1,6 @@
+/*
+ * @description 全局关键字
+ **/
 import { makeMap } from './makeMap'
 
 const GLOBALS_WHITE_LISTED =
