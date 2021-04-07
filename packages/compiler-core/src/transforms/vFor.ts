@@ -252,10 +252,13 @@ export function processFor(
   }
 }
 
+// 正则效果及功能请查看../../assets/img/transforms/vFor.ts-255
 const forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/
 // This regex doesn't cover the case if key or index aliases have destructuring,
 // but those do not make sense in the first place, so this works in practice.
+// 正则效果及功能请查看../../assets/img/transforms/vFor.ts-259
 const forIteratorRE = /,([^,\}\]]*)(?:,([^,\}\]]*))?$/
+// 正则效果及功能请查看../../assets/img/transforms/vFor.ts-261
 const stripParensRE = /^\(|\)$/g
 
 export interface ForParseResult {

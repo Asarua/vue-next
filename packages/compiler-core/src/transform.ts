@@ -114,29 +114,50 @@ export interface TransformContext
   constantCache: Map<TemplateChildNode, ConstantTypes>
 }
 
+// 创建转换上下文
 export function createTransformContext(
+  // 根节点
   root: RootNode,
   {
+    // 文件名
     filename = '',
+    // 前缀标识符
     prefixIdentifiers = false,
+    // 静态提升
     hoistStatic = false,
+    // 缓存操作
     cacheHandlers = false,
+    // 节点转换
     nodeTransforms = [],
+    // 指令转换
     directiveTransforms = {},
+    // 转换提升
     transformHoist = null,
+    // 是否内置组件
     isBuiltInComponent = NOOP,
+    // 是否自定义元素
     isCustomElement = NOOP,
+    // 表达式插件
     expressionPlugins = [],
+    // 作用域id
     scopeId = null,
+    // 是否存在插槽
     slotted = true,
+    // 服务端渲染
     ssr = false,
+    // 服务端css变量
     ssrCssVars = ``,
+    // 绑定元数据
     bindingMetadata = EMPTY_OBJ,
+    // 是否行内
     inline = false,
+    // 是否是ts语句
     isTS = false,
+    // 错误处理
     onError = defaultOnError
   }: TransformOptions
 ): TransformContext {
+  // 正则效果及功能请查看../assets/img/transform.ts_1和_2
   const nameMatch = filename.replace(/\?.*$/, '').match(/([^/\\]+)\.\w+$/)
   const context: TransformContext = {
     // options

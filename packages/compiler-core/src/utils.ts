@@ -34,12 +34,15 @@ import {
 } from './runtimeHelpers'
 import { isString, isObject, hyphenate, extend } from '@vue/shared'
 
+// 是否是静态表达式
 export const isStaticExp = (p: JSChildNode): p is SimpleExpressionNode =>
   p.type === NodeTypes.SIMPLE_EXPRESSION && p.isStatic
 
+// 是否是内置属性
 export const isBuiltInType = (tag: string, expected: string): boolean =>
   tag === expected || tag === hyphenate(expected)
 
+// 是否是核心组件
 export function isCoreComponent(tag: string): symbol | void {
   if (isBuiltInType(tag, 'Teleport')) {
     return TELEPORT
@@ -52,10 +55,12 @@ export function isCoreComponent(tag: string): symbol | void {
   }
 }
 
+// 正则功能及效果请查看 ../assets/img/utils.ts-58
 const nonIdentifierRE = /^\d|[^\$\w]/
 export const isSimpleIdentifier = (name: string): boolean =>
   !nonIdentifierRE.test(name)
 
+// 正则功能及效果请查看 ../assets/img/utils.ts-63
 const memberExpRE = /^[A-Za-z_$][\w$]*(?:\s*\.\s*[A-Za-z_$][\w$]*|\[[^\]]+\])*$/
 export const isMemberExpression = (path: string): boolean => {
   if (!path) return false
@@ -274,6 +279,7 @@ export function toValidAssetId(
   name: string,
   type: 'component' | 'directive'
 ): string {
+  // 正则功能及效果请查看 ../assets/img/utils.ts-282
   return `_${type}_${name.replace(/[^\w]/g, '_')}`
 }
 

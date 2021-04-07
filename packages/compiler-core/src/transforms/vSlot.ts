@@ -220,6 +220,7 @@ export function buildSlots(
         )
       )
     } else if (
+      // 正则效果及功能请查看../../assets/img/transforms/vSlot.ts-223
       (vElse = findDir(slotElement, /^else(-if)?$/, true /* allowEmpty */))
     ) {
       // find adjacent v-if

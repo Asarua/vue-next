@@ -22,47 +22,81 @@ export const enum Namespaces {
   HTML
 }
 
+// 节点类型
 export const enum NodeTypes {
+  // 根结点
   ROOT,
+  // 元素节点
   ELEMENT,
+  // 文本节点
   TEXT,
+  // 注释节点
   COMMENT,
+  // 单行表达式
   SIMPLE_EXPRESSION,
+  // 插值
   INTERPOLATION,
+  // 属性
   ATTRIBUTE,
+  // 指令
   DIRECTIVE,
-  // containers
+  //! containers 容器
+  // 符合表达式
   COMPOUND_EXPRESSION,
+  // if
   IF,
+  // if分支
   IF_BRANCH,
+  // for
   FOR,
+  // 文本调用
   TEXT_CALL,
-  // codegen
+  //! codegen 代码块
+  // 虚拟节点调用
   VNODE_CALL,
+  // js调用表达式
   JS_CALL_EXPRESSION,
+  // js对象表达式
   JS_OBJECT_EXPRESSION,
+  // js属性
   JS_PROPERTY,
+  // js数组表达式
   JS_ARRAY_EXPRESSION,
+  // js函数表达式
   JS_FUNCTION_EXPRESSION,
+  // js条件表达式
   JS_CONDITIONAL_EXPRESSION,
+  // js缓存表达式
   JS_CACHE_EXPRESSION,
 
-  // ssr codegen
+  //! ssr codegen ssr代码块
+  // js块级声明
   JS_BLOCK_STATEMENT,
+  // js模板字面量
   JS_TEMPLATE_LITERAL,
+  // js if块
   JS_IF_STATEMENT,
+  // js赋值表达式
   JS_ASSIGNMENT_EXPRESSION,
+  // js序列表达式
   JS_SEQUENCE_EXPRESSION,
+  // js return表达式
   JS_RETURN_STATEMENT
 }
 
+// 元素类型
 export const enum ElementTypes {
+  // 元素
   ELEMENT,
+  // 组件
   COMPONENT,
+  // 插槽
   SLOT,
+  // 模板
   TEMPLATE
 }
 
+// 节点接口
 export interface Node {
   type: NodeTypes
   loc: SourceLocation
@@ -82,10 +116,13 @@ export interface Position {
   column: number
 }
 
+// 父节点的类型
 export type ParentNode = RootNode | ElementNode | IfBranchNode | ForNode
 
+// 表达式节点
 export type ExpressionNode = SimpleExpressionNode | CompoundExpressionNode
 
+// 模板子元素节点
 export type TemplateChildNode =
   | ElementNode
   | InterpolationNode
@@ -517,6 +554,11 @@ export interface ForIteratorExpression extends FunctionExpression {
 // Some expressions, e.g. sequence and conditional expressions, are never
 // associated with template nodes, so their source locations are just a stub.
 // Container types like CompoundExpression also don't need a real location.
+
+/*
+  一些表达式（像序列和条件表达式之类的），不需要与模板节点相关，因此他们的源文件位置可以是一个默认的。
+  容器类型像是符合表达式的也不需要一个真是的位置
+*/
 export const locStub: SourceLocation = {
   source: '',
   start: { line: 1, column: 1, offset: 0 },

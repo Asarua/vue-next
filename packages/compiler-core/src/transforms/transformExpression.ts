@@ -368,6 +368,7 @@ export function processExpression(
 }
 
 const isFunction = (node: Node): node is Function => {
+  // 正则效果及功能请查看../../assets/img/transforms/transformExpression.ts-371
   return /Function(?:Expression|Declaration)$|Method$/.test(node.type)
 }
 

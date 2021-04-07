@@ -5,6 +5,7 @@ import { TransformContext } from './transform'
 import { createCompilerError, ErrorCodes } from './errors'
 
 // typeof, instanceof and in are allowed
+// 禁止的关键字，typeof、instanceof、in是可以的
 const prohibitedKeywordRE = new RegExp(
   '\\b' +
     (
@@ -18,6 +19,7 @@ const prohibitedKeywordRE = new RegExp(
 )
 
 // strip strings in expressions
+// 正则效果及功能请查看../assets/img/validateExpression.ts-22
 const stripStringRE = /'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|`(?:[^`\\]|\\.)*\$\{|\}(?:[^`\\]|\\.)*`|`(?:[^`\\]|\\.)*`/g
 
 /**

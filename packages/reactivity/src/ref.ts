@@ -1,3 +1,41 @@
+/*
+  ! https://github.com/vuejs/vue-next/pull/1900
+  ? https://github.com/vuejs/vue-next/pull/1900/files
+
+  ! 使用class，而不是普通对象的原因：大大提高了性能。
+    最初的实现在每个单独的ref上创建新的get和set函数。
+    这解释了在创建大量函数时内存消耗较高的原因。优化器也不太能够优化它，因为它们是不同的函数。
+
+    如果使用class之后，getter和setter都是原型链中的方法，只会声明一次。
+
+    @example
+
+    ```ts 原来的createRef函数内部
+      const r = {
+        __v_isRef: true,
+        get value() {
+          track(r, TrackOpTypes.GET, 'value')
+          return value
+        },
+        set value(newVal) {
+          if (hasChanged(toRaw(newVal), rawValue)) {
+            rawValue = newVal
+            value = shallow ? newVal : convert(newVal)
+            trigger(r, TriggerOpTypes.SET, 'value', newVal)
+          }
+        }
+      }
+      return r
+    ```
+
+    将用对象的实现变为用class，这会在内部将以下函数的实现更改为类(ref、shallowRef、customRef、toRef、cumputed)。
+    对于每个函数，都提供了一个基准来显示速度的提高（通常在70-100%之间）。
+    这些基准测试纯get&set性能。没有需要更新的依赖项。
+
+  ! 在使用ref进行track和trigger的时候需要toRaw是因为
+    代理refs时第一个解决方案失败。
+    此代理将被传递给触发器/跟踪。用toRaw来解决这个问题。这只需要一点点性能，就会相应地更新基准。
+*/
 import { track, trigger } from './effect'
 import { TrackOpTypes, TriggerOpTypes } from './operations'
 import { isArray, isObject, hasChanged } from '@vue/shared'
@@ -74,7 +112,7 @@ class RefImpl<T> {
 
   // 读取值的时候
   get value() {
-    // 添加get的依赖手机
+    // 添加get的依赖收集
     track(toRaw(this), TrackOpTypes.GET, 'value')
     // 返回当前值
     return this._value

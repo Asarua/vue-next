@@ -8,33 +8,48 @@ import {
 } from './transform'
 import { ParserPlugin } from '@babel/parser'
 
+// 解析选项
 export interface ParserOptions {
   /**
    * e.g. platform native elements, e.g. `<div>` for browsers
+   *
+   * 是否是平台原生的标签
    */
   isNativeTag?: (tag: string) => boolean
   /**
    * e.g. native elements that can self-close, e.g. `<img>`, `<br>`, `<hr>`
+   *
+   * 是否是自闭合标签
    */
   isVoidTag?: (tag: string) => boolean
   /**
    * e.g. elements that should preserve whitespace inside, e.g. `<pre>`
+   *
+   * 是否是不需要进行解析的标签
    */
   isPreTag?: (tag: string) => boolean
   /**
    * Platform-specific built-in components e.g. `<Transition>`
+   *
+   * 平台内置组件
    */
   isBuiltInComponent?: (tag: string) => symbol | void
   /**
    * Separate option for end users to extend the native elements list
+   *
+   * 是否是自定义元素
    */
   isCustomElement?: (tag: string) => boolean | void
   /**
    * Get tag namespace
+   *
+   * 获取标签命名空间
    */
   getNamespace?: (tag: string, parent: ElementNode | undefined) => Namespace
   /**
    * Get text parsing mode for this element
+   *
+   * 获取此元素的文本解析模式
    */
   getTextMode?: (
     node: ElementNode,
@@ -42,15 +57,24 @@ export interface ParserOptions {
   ) => TextModes
   /**
    * @default ['{{', '}}']
+   *
+   * 默认的变量标识符号
    */
   delimiters?: [string, string]
   /**
    * Only needed for DOM compilers
+   *
+   * 仅适用于dom解码编译的解码函数
    */
   decodeEntities?: (rawText: string, asAttr: boolean) => string
+  /**
+   * 当发生错误
+   */
   onError?: (error: CompilerError) => void
   /**
    * Keep comments in the templates AST, even in production
+   *
+   * 在模板ast中保持注释，即使是在生产环境
    */
   comments?: boolean
 }

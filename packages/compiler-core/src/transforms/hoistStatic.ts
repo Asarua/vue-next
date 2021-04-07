@@ -16,6 +16,7 @@ import { PatchFlags, isString, isSymbol } from '@vue/shared'
 import { isSlotOutlet } from '../utils'
 import { CREATE_VNODE } from '../runtimeHelpers'
 
+// 静态提升方法
 export function hoistStatic(root: RootNode, context: TransformContext) {
   walk(
     root,

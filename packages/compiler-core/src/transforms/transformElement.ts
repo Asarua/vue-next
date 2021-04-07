@@ -58,9 +58,14 @@ import { BindingTypes } from '../options'
 
 // some directive transforms (e.g. v-model) may return a symbol for runtime
 // import, which should be used instead of a resolveDirective call.
+/*
+  指令导入映射
+  一些指令变换(例如:v-model)可能在运行导入时返回一个symbol，应该使用它来解析指令
+*/
 const directiveImportMap = new WeakMap<DirectiveNode, symbol>()
 
 // generate a JavaScript AST for this element's codegen
+// 对当前元素代码块生成一个js ast
 export const transformElement: NodeTransform = (node, context) => {
   if (
     !(

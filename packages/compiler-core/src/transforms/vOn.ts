@@ -16,6 +16,7 @@ import { validateBrowserExpression } from '../validateExpression'
 import { hasScopeRef, isMemberExpression } from '../utils'
 import { TO_HANDLER_KEY } from '../runtimeHelpers'
 
+// 正则效果及功能请查看../../assets/img/transforms/vOn.ts-19
 const fnExpRE = /^\s*([\w$_]+|\([^)]*?\))\s*=>|^\s*function(?:\s+[\w$]+)?\s*\(/
 
 export interface VOnDirectiveNode extends DirectiveNode {

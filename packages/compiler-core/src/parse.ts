@@ -40,6 +40,7 @@ type AttributeValue =
 // The default decoder only provides escapes for characters reserved as part of
 // the template syntax, and is only used if the custom renderer did not provide
 // a platform-specific decoder.
+// 正则效果及功能请查看../assets/img/parse.ts-43
 const decodeRE = /&(gt|lt|amp|apos|quot);/g
 const decodeMap: Record<string, string> = {
   gt: '>',
@@ -209,6 +210,7 @@ function parseChildren(
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i]
       if (!context.inPre && node.type === NodeTypes.TEXT) {
+        // 正则效果及功能请查看../assets/img/parse.ts-213
         if (!/[^\t\r\n\f ]/.test(node.content)) {
           const prev = nodes[i - 1]
           const next = nodes[i + 1]
@@ -234,6 +236,7 @@ function parseChildren(
             node.content = ' '
           }
         } else {
+          // 正则效果及功能请查看../assets/img/parse.ts-239
           node.content = node.content.replace(/[\t\r\n\f ]+/g, ' ')
         }
       }
@@ -307,6 +310,7 @@ function parseComment(context: ParserContext): CommentNode {
   let content: string
 
   // Regular comment.
+  // 正则效果及功能请查看../assets/img/parse.ts-313
   const match = /--(\!)?>/.exec(context.source)
   if (!match) {
     content = context.source.slice(4)
@@ -343,6 +347,7 @@ function parseComment(context: ParserContext): CommentNode {
 }
 
 function parseBogusComment(context: ParserContext): CommentNode | undefined {
+  // 正则效果及功能请查看../assets/img/parse.ts-350
   __TEST__ && assert(/^<(?:[\!\?]|\/[^a-z>])/i.test(context.source))
 
   const start = getCursor(context)
@@ -369,6 +374,7 @@ function parseElement(
   context: ParserContext,
   ancestors: ElementNode[]
 ): ElementNode | undefined {
+  // 正则效果及功能请查看../assets/img/parse.ts-377
   __TEST__ && assert(/^<[a-z]/i.test(context.source))
 
   // Start tag.
@@ -432,6 +438,7 @@ function parseTag(
   type: TagType,
   parent: ElementNode | undefined
 ): ElementNode {
+  // 正则效果及功能请查看../assets/img/parse.ts-441
   __TEST__ && assert(/^<\/?[a-z]/i.test(context.source))
   __TEST__ &&
     assert(
@@ -440,6 +447,7 @@ function parseTag(
 
   // Tag open.
   const start = getCursor(context)
+  // 正则效果及功能请查看../assets/img/parse.ts-450
   const match = /^<\/?([a-z][^\t\r\n\f />]*)/i.exec(context.source)!
   const tag = match[1]
   const ns = context.options.getNamespace(tag, parent)
@@ -555,6 +563,7 @@ function parseAttributes(
       props.push(attr)
     }
 
+    // 正则效果及功能请查看../assets/img/parse.ts-566
     if (/^[^\t\r\n\f />]/.test(context.source)) {
       emitError(context, ErrorCodes.MISSING_WHITESPACE_BETWEEN_ATTRIBUTES)
     }
@@ -567,10 +576,12 @@ function parseAttribute(
   context: ParserContext,
   nameSet: Set<string>
 ): AttributeNode | DirectiveNode {
+  // 正则效果及功能请查看../assets/img/parse.ts-566
   __TEST__ && assert(/^[^\t\r\n\f />]/.test(context.source))
 
   // Name.
   const start = getCursor(context)
+  // 正则效果及功能请查看../assets/img/parse.ts-584
   const match = /^[^\t\r\n\f />][^\t\r\n\f />=]*/.exec(context.source)!
   const name = match[0]
 
@@ -583,6 +594,7 @@ function parseAttribute(
     emitError(context, ErrorCodes.UNEXPECTED_EQUALS_SIGN_BEFORE_ATTRIBUTE_NAME)
   }
   {
+    // 正则效果及功能请查看../assets/img/parse.ts-597
     const pattern = /["'<]/g
     let m: RegExpExecArray | null
     while ((m = pattern.exec(name))) {
@@ -599,6 +611,7 @@ function parseAttribute(
   // Value
   let value: AttributeValue = undefined
 
+  // 正则效果及功能请查看../assets/img/parse.ts-614
   if (/^[\t\r\n\f ]*=/.test(context.source)) {
     advanceSpaces(context)
     advanceBy(context, 1)
@@ -610,7 +623,9 @@ function parseAttribute(
   }
   const loc = getSelection(context, start)
 
+  // 正则效果及功能请查看../assets/img/parse.ts-626
   if (!context.inVPre && /^(v-|:|@|#)/.test(name)) {
+    // 正则效果及功能请查看../assets/img/parse.ts-628
     const match = /(?:^v-([a-z0-9-]+))?(?:(?::|^@|^#)(\[[^\]]+\]|[^\.]+))?(.+)?$/i.exec(
       name
     )!
@@ -726,10 +741,12 @@ function parseAttributeValue(context: ParserContext): AttributeValue {
     }
   } else {
     // Unquoted
+    // 正则效果及功能请查看../assets/img/parse.ts-744
     const match = /^[^\t\r\n\f >]+/.exec(context.source)
     if (!match) {
       return undefined
     }
+    // 正则效果及功能请查看../assets/img/parse.ts-749
     const unexpectedChars = /["'<=`]/g
     let m: RegExpExecArray | null
     while ((m = unexpectedChars.exec(match[0]))) {
@@ -877,6 +894,7 @@ function advanceBy(context: ParserContext, numberOfCharacters: number): void {
 }
 
 function advanceSpaces(context: ParserContext): void {
+  // 正则效果及功能请查看../assets/img/parse.ts-897
   const match = /^[\t\r\n\f ]+/.exec(context.source)
   if (match) {
     advanceBy(context, match[0].length)
@@ -956,6 +974,7 @@ function startsWithEndTagOpen(source: string, tag: string): boolean {
   return (
     startsWith(source, '</') &&
     source.substr(2, tag.length).toLowerCase() === tag.toLowerCase() &&
+    // 正则效果及功能请查看../assets/img/parse.ts-977
     /[\t\r\n\f />]/.test(source[2 + tag.length] || '>')
   )
 }

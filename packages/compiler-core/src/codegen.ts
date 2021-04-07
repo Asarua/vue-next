@@ -897,6 +897,7 @@ function genTemplateLiteral(node: TemplateLiteral, context: CodegenContext) {
   for (let i = 0; i < l; i++) {
     const e = node.elements[i]
     if (isString(e)) {
+      // 正则效果及功能请查看../assets/img/codegen.ts-900
       push(e.replace(/(`|\$|\\)/g, '\\$1'))
     } else {
       push('${')
