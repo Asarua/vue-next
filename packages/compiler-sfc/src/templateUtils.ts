@@ -6,11 +6,13 @@ export function isRelativeUrl(url: string): boolean {
   return firstChar === '.' || firstChar === '~' || firstChar === '@'
 }
 
+// 正则效果及功能请查看../assets/img/templateUtils.ts-9
 const externalRE = /^https?:\/\//
 export function isExternalUrl(url: string): boolean {
   return externalRE.test(url)
 }
 
+// 正则效果及功能请查看../assets/img/templateUtils.ts-15
 const dataUrlRE = /^\s*data:/i
 export function isDataUrl(url: string): boolean {
   return dataUrlRE.test(url)

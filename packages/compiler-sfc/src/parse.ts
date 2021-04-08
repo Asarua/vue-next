@@ -236,6 +236,7 @@ export function parse(
   }
 
   // check if the SFC uses :slotted
+  // 正则效果及功能请查看../assets/img/parse.ts-239
   const slottedRE = /(?:::v-|:)slotted\(/
   descriptor.slotted = descriptor.styles.some(
     s => s.scoped && slottedRE.test(s.content)
@@ -312,6 +313,7 @@ function createBlock(
 }
 
 const splitRE = /\r?\n/g
+// 正则效果及功能请查看../assets/img/parse.ts-316
 const emptyRE = /^(?:\/\/)?\s*$/
 const replaceRE = /./g
 

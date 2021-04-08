@@ -1,3 +1,4 @@
+//! 校验表达式
 // these keywords should not appear inside expressions, but operators like
 
 import { SimpleExpressionNode } from './ast'

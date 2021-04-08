@@ -26,6 +26,7 @@ interface ImageCandidate {
 }
 
 // http://w3c.github.io/html/semantics-embedded-content.html#ref-for-image-candidate-string-5
+// 正则效果及功能请查看../assets/img/templateTransformSrcset.ts-29
 const escapedSpaceCharacters = /( |\\t|\\n|\\f|\\r)+/g
 
 export const createSrcsetTransformWithOptions = (

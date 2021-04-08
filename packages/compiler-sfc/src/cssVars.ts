@@ -12,6 +12,7 @@ import { PluginCreator } from 'postcss'
 import hash from 'hash-sum'
 
 export const CSS_VARS_HELPER = `useCssVars`
+// 正则效果及功能请查看../assets/img/cssVars.ts-15
 export const cssVarRE = /\bv-bind\(\s*(?:'([^']+)'|"([^"]+)"|([^'"][^)]*))\s*\)/g
 
 export function genCssVarsFromList(
@@ -28,6 +29,7 @@ function genVarName(id: string, raw: string, isProd: boolean): string {
   if (isProd) {
     return hash(id + raw)
   } else {
+    // 正则效果及功能请查看../assets/img/cssVars.ts-32
     return `${id}-${raw.replace(/([^\w-])/g, '_')}`
   }
 }

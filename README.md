@@ -9,9 +9,9 @@
 - [x] reactivity
 - [x] shared
 - [x] size-check
-- [ ] compiler-core（进行中）
+- [ ] compiler-core
 - [ ] compiler-dom
-- [ ] compiler-sfc
+- [ ] compiler-sfc（进行中）
 - [ ] compiler-ssr
 - [ ] runtime-core
 - [ ] runtime-dom

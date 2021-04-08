@@ -1482,6 +1482,7 @@ const isStaticPropertyKey = (node: Node, parent: Node) =>
   isStaticProperty(parent) && parent.key === node
 
 function isFunction(node: Node): node is FunctionNode {
+  // 正则效果及功能请查看../../assets/img/transforms/transformExpression.ts-371
   return /Function(?:Expression|Declaration)$|Method$/.test(node.type)
 }
 

@@ -1,8 +1,11 @@
 import { parse, ParserPlugin } from '@babel/parser'
 import MagicString from 'magic-string'
 
+// 正则效果及功能请查看../assets/img/rewirteDefault.ts-4
 const defaultExportRE = /((?:^|\n|;)\s*)export(\s*)default/
+// 正则效果及功能请查看../assets/img/rewirteDefault.ts-6
 const namedDefaultExportRE = /((?:^|\n|;)\s*)export(.+)as(\s*)default/
+// 正则效果及功能请查看../assets/img/rewirteDefault.ts-8
 const exportDefaultClassRE = /((?:^|\n|;)\s*)export\s+default\s+class\s+([\w$]+)/
 
 /**

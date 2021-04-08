@@ -2,11 +2,14 @@ import { PluginCreator, Rule } from 'postcss'
 import selectorParser from 'postcss-selector-parser'
 import { warn } from './warn'
 
+// 正则效果及功能请查看../assets/img/stylePluginScoped.ts-5
 const animationNameRE = /^(-\w+-)?animation-name$/
+// 正则效果及功能请查看../assets/img/stylePluginScoped.ts-7
 const animationRE = /^(-\w+-)?animation$/
 
 const scopedPlugin: PluginCreator<string> = (id = '') => {
   const keyframes = Object.create(null)
+  // 正则效果及功能请查看../assets/img/stylePluginScoped.ts-12
   const shortId = id.replace(/^data-v-/, '')
 
   return {
@@ -16,6 +19,7 @@ const scopedPlugin: PluginCreator<string> = (id = '') => {
     },
     AtRule(node) {
       if (
+        // 正则效果及功能请查看../assets/img/stylePluginScoped.ts-22
         /-?keyframes$/.test(node.name) &&
         !node.params.endsWith(`-${shortId}`)
       ) {
