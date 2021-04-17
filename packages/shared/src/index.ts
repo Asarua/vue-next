@@ -139,7 +139,9 @@ export const isReservedProp = /*#__PURE__*/ makeMap(
     'onVnodeBeforeUnmount,onVnodeUnmounted'
 )
 
-// 缓存对字符串进行操作的方法
+// 缓存对字符串进行操作的方法（代理模式 -> 缓存代理）
+// 缓存代理可以为一些开销大的运算结果提供暂时的存储，在下次运算时，
+// 如果传递进来的参数跟之前的一致，则可以直接返回前面存储的运算结果
 const cacheStringFunction = <T extends (str: string) => string>(fn: T): T => {
   const cache: Record<string, string> = Object.create(null)
   return ((str: string) => {
